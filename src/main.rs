@@ -23,13 +23,14 @@ fn main() {
     // Rust中的基本 标量类型（scalar，代表一个单独的值）：
     // 1、整型: i8/i16/i32(默认)/i64/i128/isize(有符号)、u8/u16/u32/u64/u128/usize(无符号)
     // 2、浮点型：f32(单精度)、f64（双精度，默认）
-    // 3、布尔类型
+    // 3、布尔类型：true、false
     // 4、字符串类型
 
     // 加法
     let sum = 1 + 5;
     // 减法
-    let difference = 100.2 - 90.5;
+    // let difference = 100.2 - 90.5; // difference: 9.700000000000003
+    let difference = 95.2 - 4.3;
     // 乘法
     let product = 4 * 5;
     // 除法
@@ -41,4 +42,13 @@ fn main() {
         "sum: {}, difference: {}, product: {}, quotient: {}, remainder: {}",
         sum, difference, product, quotient, remainder
     );
+
+    let is_used = true;
+    let is_complete: bool = false; // 显式指定类型注解
+    println!("isUsed: {}, isComplete: {}", is_used, is_complete);
+
+    let c = 'c';
+    let z = 'ℤ';
+    let heart_eyed_cat = '😻';
+    println!("c: {}, z: {}, heartEyedCat: {}", c, z, heart_eyed_cat);
 }

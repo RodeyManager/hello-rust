@@ -1,11 +1,16 @@
-use ferris_says::say;
-use std::io::{stdout, BufWriter};
+use rand::Rng;
+use std::io;
 
 fn main() {
-    let stdout = stdout();
-    let message = String::from("Hello fellow Rustaceans!");
-    let width = message.chars().count();
+    println!("猜数字！");
 
-    let mut writer = BufWriter::new(stdout.lock());
-    say(message.as_bytes(), width, &mut writer).unwrap();
+    let secret_number = rand::thread_rng().gen::<u32>();
+
+    println!("密码数字: {}", secret_number);
+    println!("请输入一个数字: ");
+
+    let mut guess = String::new();
+    io::stdin().read_line(&mut guess).expect("读取失败");
+
+    println!("当前数字为: {}", guess);
 }

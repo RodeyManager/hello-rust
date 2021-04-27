@@ -1,6 +1,5 @@
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::{self, Read, Write};
+use std::io;
 
 fn main() -> io::Result<()> {
     // ---- 常见集合 ----
@@ -295,5 +294,55 @@ fn main() -> io::Result<()> {
     // 例如，“Add Sally to Engineering” 或 “Add Amir to Sales”。
     // 接着让用户获取一个部门的所有员工的列表，或者公司每个部门的所有员工按照字典序排列的列表。
 
+    employee_manager();
+
     Ok(())
+}
+
+// 员工管理
+fn get_input() -> String {
+    let mut name = "".to_string();
+    // 读取员工名称
+    io::stdin().read_line(&mut name).expect("读取用户输入失败");
+    let name = name.trim().to_string();
+    name
+}
+
+fn preview(company: &mut HashMap<&str, Vec<String>>) {
+    println!(
+        "公司开发部门人员: {:?}",
+        company.get("dev").expect("暂无开发员工")
+    );
+    println!(
+        "公司业务部门人员: {:?}",
+        company.get("bus").expect("暂无开发员工")
+    );
+}
+
+fn employee_manager() {
+    let mut dev_department: Vec<String> = Vec::new();
+    let mut bus_department: Vec<String> = Vec::new();
+    let mut company: HashMap<&str, Vec<String>> = HashMap::new();
+
+    loop {
+        println!("<提示> 公司员工管理（add:添加员工; exit:退出）");
+
+        let name = get_input();
+
+        if name == "exit" {
+            break;
+        };
+
+        if name == "add" {
+            println!("<提示> 请添加新员工(以下输入合法：dev:Rodey)：");
+        } else if name.starts_with("dev:") {
+            dev_department.push(name.replace("dev:", ""));
+        } else if name.starts_with("bus:") {
+            bus_department.push(name.replace("bus:", ""));
+        }
+    }
+
+    company.insert("dev", dev_department);
+    company.insert("bus", bus_department);
+    preview(&mut company);
 }

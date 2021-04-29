@@ -11,7 +11,6 @@ fn main() {
     // let v = vec![1,2,3];
     // let value = v[100];
 
-
     // version 1
 
     // let file = File::open("hello.txt");
@@ -32,7 +31,6 @@ fn main() {
     //     },
     // };
 
-
     // version 2
 
     // let file = File::open("hello.txt").unwrap_or_else(|error| {
@@ -45,16 +43,10 @@ fn main() {
     //     }
     // });
 
-
     // version 3
 
     // 如果找不到文件 unwrap，将直接panic
     // let file = File::open("hello.txt").unwrap();
     // 自定义错误内容 expect
     // let file = File::open("hello.txt").expect("读取文件[hello.txt]失败");
-
-
-
-
-
 }

@@ -1,8 +1,9 @@
-use std::fs::File;
-use std::io::ErrorKind;
+use std::error::Error;
+use std::io::{self, ErrorKind};
 
-fn main() {
-
+// Result<(), Box<dyn Error>>
+// Box<dyn Error> 被称为 “trait 对象”（“trait object”）,可为函数返回任意类型错误
+fn main() -> Result<(), Box<dyn Error>> {
     // ----- 错误处理 -----
 
     // panic!("panic(恐慌) 这是一个不可恢复的错误，会终止程序");
@@ -49,4 +50,47 @@ fn main() {
     // let file = File::open("hello.txt").unwrap();
     // 自定义错误内容 expect
     // let file = File::open("hello.txt").expect("读取文件[hello.txt]失败");
+
+    // let username = match read_username_from_file() {
+    //     Ok(name) => name,
+    //     Err(err) => panic!("读取文件[hello.txt]失败: {:?}", err),
+    // };
+    // println!("读取文件内容：{}", username);
+
+    // version 4
+    File::fs::read_to_string("hello.txt")?;
+    Ok(())
 }
+
+// 传播错误
+// fn read_username_from_file() -> Result<String, io::Error> {
+//     let file = File::open("hello.txt");
+
+//     let mut file = match file {
+//         Ok(file) => file,
+//         Err(err) => return Err(err),
+//     };
+
+//     let mut s = String::from("");
+//     match file.read_to_string(&mut s) {
+//         Ok(_) => Ok(s),
+//         Err(err) => Err(err),
+//     }
+// }
+
+// 传播错误的简写：? 运算符
+// ? 运算符可被用于返回 Result 的函数，所在的函数必须返回Result类型
+// fn read_username_from_file() -> Result<String, io::Error> {
+//     let mut file = File::open("hello.txt")?;
+//     let mut s = String::from("");
+//     file.read_to_string(&mut s)?;
+//     Ok(s)
+// }
+// fn read_username_from_file() -> Result<String, io::Error> {
+//     let mut s = String::from("hello.txt");
+//     File::open("hello.txt")?.read_to_string(&mut s)?;
+//     Ok(s)
+// }
+// fn read_username_from_file() -> Result<String, io::Error> {
+//     fs::read_to_string("hello.txt")
+// }

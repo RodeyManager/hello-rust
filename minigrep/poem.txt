@@ -1,0 +1,25 @@
+I'm nobody! Who are you?
+Are you nobody, too?
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
+
+How dreary to be somebody!
+How public, like a frog
+To tell your name the livelong day
+To an admiring bog!
+
+现在我们将逻辑提取到了 src/lib.rs 并将所有的参数解析和错误处理留在了 src/main.rs 中，为代码的核心功能编写测试将更加容易。
+我们可以直接使用多种参数调用函数并检查返回值而无需从命令行运行二进制文件了。
+如果你愿意的话，请自行为 Config::new 和 run 函数的功能编写一些测试。
+
+在这一部分，我们将遵循测试驱动开发（Test Driven Development, TDD）的模式来逐步增加 minigrep 的搜索逻辑。
+这是一个软件开发技术，它遵循如下步骤：
+  编写一个失败的测试，并运行它以确保它失败的原因是你所期望的。
+  编写或修改足够的代码来使新的测试通过。
+  重构刚刚增加或修改的代码，并确保测试仍然能通过。
+从步骤 1 开始重复！
+这只是众多编写软件的方法之一，不过 TDD 有助于驱动代码的设计。
+在编写能使测试通过的代码之前编写测试有助于在开发过程中保持高测试覆盖率。
+
+我们将测试驱动实现实际在文件内容中搜索查询字符串并返回匹配的行示例的功能。
+我们将在一个叫做 search 的函数中增加这些功能。

@@ -1,11 +1,13 @@
-use ferris_says::say;
-use std::io::{stdout, BufWriter};
+
 
 fn main() {
-    let stdout = stdout();
-    let message = String::from("Hello fellow Rustaceans!");
-    let width = message.chars().count();
 
-    let mut writer = BufWriter::new(stdout.lock());
-    say(message.as_bytes(), width, &mut writer).unwrap();
+    // 一个 I/O 项目：构建一个命令行程序
+
+    // 项目文件夹: minigrep
+
+    // 运行命令： cargo run <searchstring> <file.txt>
+    // searchstring: 指定搜索的字符串
+    // file.txt：指定从某个文件总进行搜索
+
 }

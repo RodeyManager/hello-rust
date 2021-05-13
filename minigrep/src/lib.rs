@@ -22,30 +22,39 @@ pub fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
 
 // 搜索字符串
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-  let mut result = Vec::new();
+  // let mut result = Vec::new();
 
   // 1、读取每一行数据
   // 2、过滤首尾空格
-  for line in contents.lines() {
-    if line.contains(&query) {
-      result.push(line);
-    }
-  }
+  // for line in contents.lines() {
+  //   if line.contains(&query) {
+  //     result.push(line);
+  //   }
+  // }
+  // result
 
-  result
+  // 3、使用迭代器适配器
+  contents
+    .lines()
+    .filter(|line| line.contains(&query))
+    .collect()
 }
 
 pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-  let mut result = Vec::new();
+  // let mut result = Vec::new();
   let query = query.to_lowercase();
 
-  for line in contents.lines() {
-    if line.to_lowercase().contains(&query) {
-      result.push(line);
-    }
-  }
+  contents
+    .lines()
+    .filter(|line| line.to_lowercase().contains(&query))
+    .collect()
 
-  result
+  // for line in contents.lines() {
+  //   if line.to_lowercase().contains(&query) {
+  //     result.push(line);
+  //   }
+  // }
+  // result
 }
 
 pub struct Config {
@@ -55,16 +64,39 @@ pub struct Config {
 }
 
 impl Config {
-  pub fn new(args: &[String]) -> Result<Config, &'static str> {
-    if args.len() < 2 {
-      return Err("请输入完整参数\x1b[31m(exp: minigrep <search-string> <local-file>)\x1b[39m");
-    }
-    let query = args[0].clone();
-    let filename = args[1].clone();
-    // 检查环境变量是否设置（不关心其值）
-    // powershell:
-    // 设置： $Env:CASE_INSENSITIVE=1
-    // 删除：$Env:CASE_INSENSITIVE=$null
+  // pub fn new(args: &[String]) -> Result<Config, &'static str> {
+  //   if args.len() < 2 {
+  //     return Err("请输入完整参数\x1b[31m(exp: minigrep <search-string> <local-file>)\x1b[39m");
+  //   }
+  //   let query = args[0].clone();
+  //   let filename = args[1].clone();
+  //   // 检查环境变量是否设置（不关心其值）
+  //   // powershell:
+  //   // 设置： $Env:CASE_INSENSITIVE=1
+  //   // 删除：$Env:CASE_INSENSITIVE=$null
+  //   let case_sensitive = std::env::var("CASE_INSENSITIVE").is_err();
+  //   Ok(Config {
+  //     query,
+  //     filename,
+  //     case_sensitive,
+  //   })
+  // }
+
+  // 使用迭代器
+  pub fn new(mut args: std::env::Args) -> Result<Config, &'static str> {
+    args.next();
+
+    // 使用 Iterator trait 代替索引
+    let query = match args.next() {
+      Some(query) => query,
+      None => return Err("请输入查询关键字"),
+    };
+
+    let filename = match args.next() {
+      Some(filename) => filename,
+      None => return Err("请输入文件地址"),
+    };
+
     let case_sensitive = std::env::var("CASE_INSENSITIVE").is_err();
     Ok(Config {
       query,

@@ -26,11 +26,13 @@ fn main() {
 
     // ---- 2、
     // 重构改进模块性和错误处理
-    let args: Vec<String> = std::env::args().skip(1).collect();
+    // let args: Vec<String> = std::env::args().skip(1).collect();
+    // 使用迭代器
+    let args = std::env::args();
 
     // let config = Config::new(&args);
     // 非零的退出状态是一个惯例信号，用来告诉调用程序的进程：该程序以错误状态退出了。
-    let config = Config::new(&args).unwrap_or_else(|err| {
+    let config = Config::new(args).unwrap_or_else(|err| {
         Console::error(format!("× {}", err).as_str());
         process::exit(0);
     });

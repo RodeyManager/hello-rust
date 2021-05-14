@@ -25,6 +25,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "art"
+version = "0.1.0"
+
+[[package]]
 name = "atty"
 version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -114,6 +118,7 @@ checksum = "f6503fe142514ca4799d4c26297c4248239fe8838d827db6bd6065c6ed29a6ce"
 name = "hello-rust"
 version = "0.1.0"
 dependencies = [
+ "art",
  "ferris-says",
 ]
 
